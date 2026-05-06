@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kantin-ingress
+  annotations:
+    # Mengaktifkan fitur rewrite jika diperlukan (opsional tergantung kebutuhan backend)
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx  # <--- WAJIB ADA agar Ingress Controller mengenali file ini
+  rules:
+  - host: kantin.local     # <--- Domain yang akan kamu buka di browser
+    http:
+      paths:
+      - path: /api         # <--- Semua request ke kantin.local/api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend-service # <--- Harus sama dengan name di k8s.yaml
+            port:
+              number: 5000
+      - path: /            # <--- Semua request ke kantin.local/ (tampilan web)
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-service # <--- Harus sama dengan name di k8s.yaml
+            port:
+              number: 80
