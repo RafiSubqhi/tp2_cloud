@@ -16,12 +16,10 @@ spec:
       containers:
       - name: backend-api
         image: rafisuqbhi/kantin-backend:latest
-        imagePullPolicy: Always
         ports:
         - containerPort: 5000
-        # --- INI ADALAH IDENTITY INJECTION (POIN 3) ---
         env:
         - name: PEMILIK_NAMA
           value: "Rafi Subqhi Nuraziz"
         - name: PEMILIK_NIM
-          value: "00000000" # Ganti dengan NIM asli kamu
+          value: "2408678"
