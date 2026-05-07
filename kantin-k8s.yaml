@@ -7,18 +7,38 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: backend
+      app: backend # <-- Kunci 1
   template:
     metadata:
       labels:
-        app: backend
+        app: backend # <-- Kunci 1
     spec:
       containers:
       - name: backend-api
         image: rafisuqbhi/kantin-backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
         env:
-        # Ubah nama variabelnya agar SAMA PERSIS dengan di Python
-        - name: NAMA_PRAKTIKAN 
+        - name: NAMA_PRAKTIKAN
           value: "Rafi Subqhi Nuraziz"
         - name: NIM_PRAKTIKAN
           value: "2408678"
+
+---
+# --- BACKEND SERVICE ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: backend # <-- Kunci 2: HARUS SAMA DENGAN KUNCI 1
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+
+---
+# --- FRONTEND DEPLOYMENT & SERVICE ---
+# (Pastikan label frontend juga sinkron antara Service dan Deployment-nya)
