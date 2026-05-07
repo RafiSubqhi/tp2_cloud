@@ -3,11 +3,11 @@ kind: Ingress
 metadata:
   name: kantin-ingress
   annotations:
-    # Penting agar routing ke /api tidak bingung
+    # Baris ini SANGAT PENTING untuk me-rewrite path /api menjadi /
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - http: # Baris 'host' dihapus agar bisa diakses via IP Public AKS
+  - http:
       paths:
       - path: /api
         pathType: Prefix
