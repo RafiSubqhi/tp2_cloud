@@ -2,15 +2,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: kantin-ingress
-  annotations:
-    # Penting agar routing ke backend API tidak terganggu oleh routing frontend
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  labels:
+    app: kantin
 spec:
   rules:
   - host: kantin.local
     http:
       paths:
-      # Routing untuk Backend (API)
+      # Jalur untuk API Backend
+      # Ini akan meneruskan http://kantin.local/api ke backend-service:5000
       - path: /api
         pathType: Prefix
         backend:
@@ -18,7 +18,8 @@ spec:
             name: backend-service
             port:
               number: 5000
-      # Routing untuk Frontend
+      # Jalur untuk Frontend (Root)
+      # Ini akan meneruskan http://kantin.local/ ke frontend-service:80
       - path: /
         pathType: Prefix
         backend:
