@@ -2,13 +2,16 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: kantin-ingress
+  annotations:
+    # Memaksa nginx mengenali regex agar path /api/info masuk ke sini
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
   - host: kantin.local
     http:
       paths:
-      - path: /api
-        pathType: Prefix
+      - path: /api(/|$)(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: backend-service
