@@ -1,0 +1,24 @@
+# --- BACKEND DEPLOYMENT ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-kantin
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend-api
+        image: rafisuqbhi/kantin-backend:latest
+        env:
+        # Ubah nama variabelnya agar SAMA PERSIS dengan di Python
+        - name: NAMA_PRAKTIKAN 
+          value: "Rafi Subqhi Nuraziz"
+        - name: NIM_PRAKTIKAN
+          value: "2408678"
