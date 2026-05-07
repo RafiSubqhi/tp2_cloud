@@ -23,11 +23,11 @@ katalog_data = {
  "items": ["Arcane Boots", "Glowing Wand"]
 }
 
-@app.route('/info', methods=['GET'])
+@app.route('/api/info', methods=['GET'])
 def get_info():
     return jsonify(katalog_data)
 
-@app.route('/add-item', methods=['POST'])
+@app.route('/api/add-item', methods=['POST'])
 def add_item():
     new_item = request.json.get('item')
     if new_item:
