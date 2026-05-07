@@ -2,10 +2,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: kantin-ingress
+  annotations:
+    # Penting agar routing ke /api tidak bingung
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: kantin.local
-    http:
+  - http: # Baris 'host' dihapus agar bisa diakses via IP Public AKS
       paths:
       - path: /api
         pathType: Prefix
