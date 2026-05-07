@@ -40,5 +40,39 @@ spec:
       targetPort: 5000
 
 ---
-# --- FRONTEND DEPLOYMENT & SERVICE ---
-# (Pastikan label frontend juga sinkron antara Service dan Deployment-nya)
+# --- FRONTEND DEPLOYMENT ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-kantin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend-web
+        # Ganti dengan image frontend kamu jika namanya berbeda
+        image: rafisuqbhi/kantin-frontend:latest 
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+
+---
+# --- FRONTEND SERVICE ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
