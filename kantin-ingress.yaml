@@ -3,7 +3,8 @@ kind: Ingress
 metadata:
   name: kantin-ingress
   annotations:
-    # Baris ini SANGAT PENTING untuk me-rewrite path /api menjadi /
+    # Baris di bawah ini adalah kunci agar /api di Ingress
+    # diteruskan dengan benar ke backend kamu
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
