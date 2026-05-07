@@ -2,24 +2,26 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: kantin-ingress
-  labels:
-    app: kantin
+  annotations:
+    # Mengaktifkan kemampuan regex agar path lebih fleksibel
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    # Menghindari masalah 'body size' jika nanti kamu upload gambar menu
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 spec:
   rules:
   - host: kantin.local
     http:
       paths:
-      # Jalur untuk API Backend
-      # Ini akan meneruskan http://kantin.local/api ke backend-service:5000
-      - path: /api
-        pathType: Prefix
+      # 1. Jalur Backend (API)
+      # Menggunakan regex /api(/|$)(.*) agar semua yang berawal /api diteruskan dengan benar
+      - path: /api(/|$)(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: backend-service
             port:
               number: 5000
-      # Jalur untuk Frontend (Root)
-      # Ini akan meneruskan http://kantin.local/ ke frontend-service:80
+      # 2. Jalur Frontend (Root)
       - path: /
         pathType: Prefix
         backend:
