@@ -3,14 +3,13 @@ kind: Ingress
 metadata:
   name: kantin-ingress
   annotations:
-    # Kita tambahkan ini lagi tapi dengan format yang lebih kuat
-    nginx.ingress.kubernetes.io/rewrite-target: /api/info
+    nginx.ingress.kubernetes.io/rewrite-target: /api/$2 # Memastikan path diteruskan dengan benar
 spec:
   rules:
   - http:
       paths:
-      - path: /api/info
-        pathType: Exact
+      - path: /api(/|$)(.*) # Menangkap semua yang diawali /api
+        pathType: Prefix
         backend:
           service:
             name: backend-service
