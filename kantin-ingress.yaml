@@ -7,8 +7,8 @@ spec:
   - host: kantin.local
     http:
       paths:
-      - path: /api/info
-        pathType: Exact
+      - path: /api
+        pathType: Prefix
         backend:
           service:
             name: backend-service
