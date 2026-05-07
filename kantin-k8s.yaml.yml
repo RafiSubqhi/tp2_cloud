@@ -16,10 +16,9 @@ spec:
       containers:
       - name: backend-api
         image: rafisuqbhi/kantin-backend:latest
-        ports:
-        - containerPort: 5000
         env:
-        - name: PEMILIK_NAMA
+        # Ubah nama variabelnya agar SAMA PERSIS dengan di Python
+        - name: NAMA_PRAKTIKAN 
           value: "Rafi Subqhi Nuraziz"
-        - name: PEMILIK_NIM
+        - name: NIM_PRAKTIKAN
           value: "2408678"
